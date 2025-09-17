@@ -2,228 +2,219 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>One UML - Generate Scenario</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Scenario</title>
   <style>
-    /* Extra Styling di luar CSS global (khusus layout ini) */
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: #f9fafb;
+    }
+    header, footer {
+      background-color: #ffffff;
+      border-bottom: 1px solid #e5e7eb;
+    }
     header {
+      padding: 0 24px;
+    }
+    header .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    header .logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    header .logo div {
+      width: 24px;
+      height: 24px;
+      background-color: #111827;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    header .logo span {
+      font-size: 20px;
+      font-weight: 600;
+      color: #111827;
+    }
+    header nav {
+      display: flex;
+      gap: 32px;
+    }
+    header nav a {
+      color: #6b7280;
+      text-decoration: none;
+      font-size: 14px;
+    }
+    header nav a.active {
+      color: #111827;
+      font-weight: 500;
+    }
+    main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+    .card {
+      background-color: #ffffff;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 32px;
+    }
+    h1 {
+      font-size: 24px;
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    label {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      color: #111827;
+      margin-bottom: 8px;
+    }
+    select, textarea, input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 6px;
+      font-size: 14px;
+      background-color: #ffffff;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .form-group {
+      margin-bottom: 24px;
+    }
+    .button-group {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-top: 1px solid #e5e7eb;
+      padding-top: 16px;
+    }
+    button {
+      padding: 10px 16px;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-primary {
+      background-color: #111827;
+      color: #ffffff;
+    }
+    .btn-secondary {
+      background-color: #ffffff;
+      border: 1px solid #d1d5db;
+      color: #6b7280;
+    }
+    footer {
+      border-top: 1px solid #e5e7eb;
+      padding: 16px 24px;
+      margin-top: 48px;
+    }
+    footer .container {
+      max-width: 1200px;
+      margin: 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 32px;
-      background: var(--bg-white);
-      border-bottom: 1px solid var(--border-light);
     }
-
-    header h1 {
-      font-size: 18px;
-      font-weight: 600;
+    footer p, footer a {
+      font-size: 12px;
+      color: #6b7280;
+      text-decoration: none;
     }
-
-    header nav a {
-      margin-left: 24px;
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
-
-    main {
-      max-width: 800px;
-      margin: 32px auto;
-      background: var(--bg-white);
-      padding: 32px;
-      border-radius: 8px;
-      border: 1px solid var(--border-light);
-    }
-
-    h2 {
-      font-size: 20px;
-      margin-bottom: 4px;
-    }
-
-    p.subtitle {
-      font-size: 14px;
-      color: var(--text-secondary);
-      margin-bottom: 24px;
-    }
-
-    /* Table */
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 12px;
-      margin-bottom: 24px;
-      font-size: 14px;
-    }
-
-    th, td {
-      text-align: left;
-      padding: 12px;
-      border: 1px solid var(--border-light);
-    }
-
-    th {
-      background: #f3f4f6;
-    }
-
-    td button {
-      padding: 6px 12px;
-      font-size: 13px;
-      border-radius: 6px;
-      background: var(--text-primary);
-      color: var(--bg-white);
-    }
-
-    /* Scenario sections */
-    .scenario-section {
-      margin-bottom: 16px;
-    }
-
-    .scenario-section label {
-      display: block;
-      font-weight: 600;
-      margin-bottom: 6px;
-      font-size: 14px;
-    }
-
-    textarea {
-      width: 100%;
-      height: 80px;
-      border: 1px solid var(--border-light);
-      border-radius: 6px;
-      padding: 10px;
-      font-size: 14px;
-      resize: none;
-    }
-
-    /* Buttons */
-    .actions {
+    footer .links {
       display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      margin-top: 24px;
-    }
-
-    .btn {
-      padding: 10px 20px;
-      font-size: 14px;
-      border-radius: 6px;
-    }
-
-    .btn-back {
-      background: #f3f4f6;
-      color: var(--text-primary);
-    }
-
-    .btn-save {
-      background: #e5e7eb;
-      color: var(--text-primary);
-    }
-
-    .btn-generate {
-      background: var(--text-primary);
-      color: var(--bg-white);
-    }
-
-    footer {
-      text-align: center;
-      font-size: 12px;
-      color: var(--text-secondary);
-      margin: 32px 0 16px;
-    }
-
-    footer a {
-      margin: 0 6px;
-      font-size: 12px;
-      color: var(--text-muted);
+      gap: 24px;
     }
   </style>
 </head>
 <body>
-
+  <!-- Header -->
   <header>
-    <h1>One UML</h1>
-    <nav>
-      <a href="#">Home</a>
-      <a href="#">Help</a>
-      <a href="#">Documentation</a>
-      <a href="#">Support</a>
-      <a href="#">👤</a>
-    </nav>
+    <div class="container">
+      <div class="logo">
+        <div><span style="color: white; font-size: 12px; font-weight: bold;">⚡</span></div>
+        <span>One UML</span>
+      </div>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Help</a>
+        <a href="#" class="active">User Scenario</a>
+      </nav>
+    </div>
   </header>
 
+  <!-- Main -->
   <main>
-    <h2>Generate Scenario (Given-When-Then)</h2>
-    <p class="subtitle">Create behavior-driven development scenarios for your user stories</p>
+    <div class="card">
+      <h1>Generate User Scenario</h1>
+      <form>
+        <!-- Select User Story -->
+        <div class="form-group">
+          <label for="userStory">Select User Story</label>
+          <select id="userStory">
+            <option value="">-- Choose User Story --</option>
+            <option value="story1">User Story 1</option>
+            <option value="story2">User Story 2</option>
+          </select>
+        </div>
 
-    <!-- Select User Story -->
-    <section>
-      <label>Select User Story</label>
-      <select style="width:100%; padding:10px; border:1px solid var(--border-light); border-radius:6px; margin-bottom:12px;">
-        <option>Select a user story...</option>
-      </select>
+        <!-- Scenario Details (Given-When-Then) -->
+         <div class="box">
+            <h3>Scenario Details</h3>
+      
+            <div class="scenario-field">
+                <label for="given">Given</label>
+                <textarea id="given" placeholder="Describe the initial condition..."></textarea>
+            </div>
+            
+            <div class="scenario-field">
+                <label for="when">When</label>
+                <textarea id="when" placeholder="Describe the action taken..."></textarea>
+            </div>
+            
+            <div class="scenario-field">
+                <label for="then">Then</label>
+                <textarea id="then" placeholder="Describe the expected outcome..."></textarea>
+            </div>
+        </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Actor</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>US-001</td>
-            <td>User Login</td>
-            <td>User</td>
-            <td><button>Select</button></td>
-          </tr>
-          <tr>
-            <td>US-002</td>
-            <td>Product Search</td>
-            <td>Customer</td>
-            <td><button>Select</button></td>
-          </tr>
-          <tr>
-            <td>US-003</td>
-            <td>Order Management</td>
-            <td>Admin</td>
-            <td><button>Select</button></td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-
-    <!-- Scenario Details -->
-    <section>
-      <div class="scenario-section">
-        <label>Given (Preconditions)</label>
-        <textarea placeholder="Describe the initial context or preconditions..."></textarea>
-      </div>
-      <div class="scenario-section">
-        <label>When (Actions)</label>
-        <textarea placeholder="Describe the action or event that triggers the scenario..."></textarea>
-      </div>
-      <div class="scenario-section">
-        <label>Then (Expected Outcomes)</label>
-        <textarea placeholder="Describe the expected result or outcome..."></textarea>
-      </div>
-    </section>
-
-    <!-- Buttons -->
-    <div class="actions">
-      <button class="btn btn-back">← Back</button>
-      <button class="btn btn-save">Save Scenario</button>
-      <button class="btn btn-generate">Generate Specification</button>
+        <!-- Buttons -->
+        <div class="button-group">
+          <button type="button" class="btn-secondary">Back</button>
+          <button type="submit" class="btn-primary">Save Scenario</button>
+          <button type="button" class="btn-secondary">Generate Specification</button>
+        </div>
+      </form>
     </div>
   </main>
 
+  <!-- Footer -->
   <footer>
-    © 2025 One UML. All rights reserved. | 
-    <a href="#">Help</a> 
-    <a href="#">Documentation</a> 
-    <a href="#">Support</a>
+    <div class="container">
+      <p>© 2025 One UML. All rights reserved.</p>
+      <div class="links">
+        <a href="#">Help</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </div>
   </footer>
-
 </body>
 </html>
