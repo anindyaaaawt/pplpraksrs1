@@ -1,11 +1,213 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>User Story</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One UML - Generate Scenario</title>
+  <link rel="stylesheet" href="style.css"> <!-- file CSS global kamu -->
+  <style>
+    /* Tambahan styling khusus halaman ini */
+
+    header {
+      background: var(--bg-white);
+      border-bottom: 1px solid var(--border-light);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+    }
+
+    h2 {
+      margin-bottom: 0.5rem;
+    }
+
+    p {
+      margin-bottom: 1.5rem;
+    }
+
+    .card {
+      background: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+
+    label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    select, textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      margin-bottom: 1rem;
+      background: var(--bg-white);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+    }
+
+    table th, table td {
+      border: 1px solid var(--border-light);
+      text-align: left;
+      padding: 0.75rem;
+    }
+
+    table th {
+      background: var(--bg-main);
+      font-weight: 600;
+    }
+
+    table td a {
+      color: #2563eb;
+      font-weight: 500;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .btn {
+      padding: 0.75rem 1.5rem;
+      border-radius: 6px;
+      font-weight: 500;
+      border: 1px solid var(--border-light);
+    }
+
+    .btn-secondary {
+      background: var(--bg-white);
+      color: var(--text-primary);
+    }
+
+    .btn-primary {
+      background: #111827;
+      color: #fff;
+      border: none;
+    }
+
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    footer a {
+      color: var(--text-secondary);
+      margin: 0 0.5rem;
+    }
+  </style>
 </head>
 <body>
-    <h1>Halo! Django</h1>
-    <p>Kalau kamu bisa lihat tulisan ini, berarti template sudah terbaca dengan benar.</p>
+  <!-- Header -->
+  <header>
+    <h1>One UML</h1>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Help</a>
+    </nav>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <h2>Generate Scenario (Given-When-Then)</h2>
+    <p>Create behavior-driven development scenarios for your user stories</p>
+
+    <!-- Select User Story -->
+    <div class="card">
+      <label for="userStory">Select User Story</label>
+      <select id="userStory">
+        <option>Select a user story...</option>
+        <option>US-001 - User Login</option>
+        <option>US-002 - Product Search</option>
+        <option>US-003 - Order Management</option>
+      </select>
+
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Actor</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>US-001</td>
+            <td>User Login</td>
+            <td>User</td>
+            <td><a href="#">Select</a></td>
+          </tr>
+          <tr>
+            <td>US-002</td>
+            <td>Product Search</td>
+            <td>Customer</td>
+            <td><a href="#">Select</a></td>
+          </tr>
+          <tr>
+            <td>US-003</td>
+            <td>Order Management</td>
+            <td>Admin</td>
+            <td><a href="#">Select</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Scenario Details -->
+    <div class="card">
+      <h3>Scenario Details</h3>
+
+      <label for="given">Given (Preconditions)</label>
+      <textarea id="given" rows="3" placeholder="Describe the initial context or preconditions..."></textarea>
+
+      <label for="when">When (Actions)</label>
+      <textarea id="when" rows="3" placeholder="Describe the action or event that triggers the scenario..."></textarea>
+
+      <label for="then">Then (Expected Outcomes)</label>
+      <textarea id="then" rows="3" placeholder="Describe the expected result or outcomes..."></textarea>
+    </div>
+
+    <!-- Actions -->
+    <div class="actions">
+      <button class="btn btn-secondary">&larr; Back</button>
+      <div>
+        <button class="btn btn-secondary">Save Scenario</button>
+        <button class="btn btn-primary">Generate Specification</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2025 One UML. All rights reserved. 
+      <a href="#">Help</a> | 
+      <a href="#">Documentation</a> | 
+      <a href="#">Support</a>
+    </p>
+  </footer>
 </body>
 </html>
