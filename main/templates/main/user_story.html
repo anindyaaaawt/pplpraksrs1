@@ -1,11 +1,234 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>User Story</title>
-</head>
-<body>
-    <h1>Halo! Django</h1>
-    <p>Kalau kamu bisa lihat tulisan ini, berarti template sudah terbaca dengan benar.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Input User Story</title>
+    <link rel="stylesheet" href="{% static 'main/css/global.css' %}">
+  </head>
+  <body>
+    <!-- Header Navigation -->
+    <header style="background-color: #ffffff; border-bottom: 1px solid #e5e7eb; padding: 0 24px; height: 64px; display: flex; align-items: center;">
+        <div style="max-width: 1200px; width: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
+            <!-- Logo Section -->
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <svg style="width: 20px; height: 20px; color: #2563eb;" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3 5a2 2 0 012-2h14a2 2 0 012 2v2a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM3 13a2 2 0 012-2h6a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6zM14 13a2 2 0 012-2h3a2 2 0 012 2v6a2 2 0 01-2 2h-3a2 2 0 01-2-2v-6z" />
+                </svg>
+                <span style="font-size: 18px; font-weight: 600; color: #111827;">One UML</span>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav style="display: flex; align-items: center; gap: 32px;">
+                <a href="#" style="color: #6b7280; font-size: 14px; font-weight: 500; text-decoration: none;">Dashboard</a>
+                <a href="#" style="color: #6b7280; font-size: 14px; font-weight: 500; text-decoration: none;">Projects</a>
+                <a href="#" style="color: #6b7280; font-size: 14px; font-weight: 500; text-decoration: none;">Templates</a>
+                <div style="width: 32px; height: 32px; background-color: #d1d5db; border-radius: 50%;"></div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main style="max-width: 680px; margin: 0 auto; padding: 40px 24px 80px;">
+        
+        <!-- Page Header -->
+        <div style="margin-bottom: 40px;">
+            <h1 style="font-size: 28px; font-weight: 600; color: #111827; margin: 0 0 8px 0; line-height: 1.2;">Input User Story</h1>
+            <p style="font-size: 16px; color: #6b7280; margin: 0; line-height: 1.5;">Create a new user story to define system requirements from user perspective</p>
+        </div>
+
+        <!-- Form Card -->
+        <div style="background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 8px; padding: 32px;">
+            
+            <!-- As a (Actor) Field -->
+            <div style="margin-bottom: 24px;">
+                <label style="display: block; font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 8px;">
+                    As a (Actor) <span style="color: #ef4444;">*</span>
+                </label>
+                <input 
+                    type="text" 
+                    placeholder="e.g., student, admin, customer"
+                    style="width: 100%; height: 44px; padding: 0 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; color: #111827; background-color: #ffffff; box-sizing: border-box;"
+                >
+                <p style="margin: 4px 0 0 0; font-size: 12px; color: #9ca3af; line-height: 1.4;">Specify the type of user or role</p>
+            </div>
+
+            <!-- I want (Goal / Feature) Field -->
+            <div style="margin-bottom: 24px;">
+                <label style="display: block; font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 8px;">
+                    I want (Goal / Feature) <span style="color: #ef4444;">*</span>
+                </label>
+                <input 
+                    type="text" 
+                    placeholder="brief feature, e.g., upload assignment"
+                    style="width: 100%; height: 44px; padding: 0 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; color: #111827; background-color: #ffffff; box-sizing: border-box;"
+                >
+                <p style="margin: 4px 0 0 0; font-size: 12px; color: #9ca3af; line-height: 1.4;">Describe the desired functionality or action</p>
+            </div>
+
+            <!-- So that (Reason / Benefit) Field -->
+            <div style="margin-bottom: 24px;">
+                <label style="display: block; font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 8px;">
+                    So that (Reason / Benefit)
+                </label>
+                <textarea 
+                    placeholder="value/benefit, e.g., submit tasks online" 
+                    rows="4"
+                    style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; color: #111827; background-color: #ffffff; resize: vertical; font-family: inherit; line-height: 1.4; box-sizing: border-box;"
+                ></textarea>
+                <p style="margin: 4px 0 0 0; font-size: 12px; color: #9ca3af; line-height: 1.4;">Explain the value or benefit to the user (optional but recommended)</p>
+            </div>
+
+            <!-- Precondition(s) Field -->
+            <div style="margin-bottom: 24px;">
+                <label style="display: block; font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 8px;">
+                    Precondition(s)
+                </label>
+                <textarea 
+                    placeholder="Enter any conditions that must be true before this story can be executed" 
+                    rows="4"
+                    style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; color: #111827; background-color: #ffffff; resize: vertical; font-family: inherit; line-height: 1.4; box-sizing: border-box;"
+                ></textarea>
+                <p style="margin: 4px 0 0 0; font-size: 12px; color: #9ca3af; line-height: 1.4;">Conditions that must hold before this story</p>
+            </div>
+
+            <!-- Trigger(s) Field -->
+            <div style="margin-bottom: 32px;">
+                <label style="display: block; font-size: 14px; font-weight: 600; color: #111827; margin-bottom: 8px;">
+                    Trigger(s)
+                </label>
+                <textarea 
+                    placeholder="Describe what initiates or starts this user story" 
+                    rows="4"
+                    style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; color: #111827; background-color: #ffffff; resize: vertical; font-family: inherit; line-height: 1.4; box-sizing: border-box;"
+                ></textarea>
+                <p style="margin: 4px 0 0 0; font-size: 12px; color: #9ca3af; line-height: 1.4;">What starts this story</p>
+            </div>
+
+            <!-- Example User Story Box -->
+            <div style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 6px; padding: 16px; margin-bottom: 24px;">
+                <h3 style="font-size: 14px; font-weight: 600; color: #111827; margin: 0 0 8px 0;">Example User Story</h3>
+                <p style="font-size: 14px; color: #6b7280; margin: 0; font-style: italic; line-height: 1.4;">"As a student, I want to upload assignments, so that I can submit tasks online."</p>
+            </div>
+
+            <!-- Related Data Collapsible -->
+            <div style="margin-bottom: 0;">
+                <button 
+                    type="button" 
+                    onclick="toggleRelatedData()" 
+                    style="display: flex; align-items: center; gap: 8px; background: none; border: none; color: #6b7280; font-size: 14px; font-weight: 500; cursor: pointer; padding: 0; font-family: inherit;"
+                >
+                    <svg id="chevron" style="width: 16px; height: 16px; transition: transform 0.2s ease;" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                    Related Data
+                </button>
+                <div id="relatedData" style="display: none; margin-top: 12px; padding: 16px; border: 1px solid #e5e7eb; border-radius: 6px; background-color: #ffffff;">
+                    <p style="color: #6b7280; font-size: 14px; margin: 0; line-height: 1.4;">Additional data and relationships for this user story will be displayed here.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Action Buttons -->
+        <div style="display: flex; align-items: center; justify-content: center; gap: 12px; margin-top: 32px;">
+            <button 
+                type="button"
+                style="height: 40px; padding: 0 20px; background-color: #374151; color: #ffffff; border: none; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center;"
+            >
+                Save
+            </button>
+            <button 
+                type="button"
+                style="height: 40px; padding: 0 20px; background-color: #374151; color: #ffffff; border: none; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center;"
+            >
+                Save + Generate Use Case
+            </button>
+            <button 
+                type="button"
+                style="height: 40px; padding: 0 20px; background-color: #ffffff; color: #6b7280; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; font-weight: 500; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center;"
+            >
+                Cancel
+            </button>
+        </div>
+
+        <!-- Help Text -->
+        <p style="text-align: center; margin-top: 12px; font-size: 12px; color: #9ca3af; line-height: 1.4; max-width: 500px; margin-left: auto; margin-right: auto;">
+            Selecting "Save + Generate Use Case" will pre-fill the Use Case form with data from this story
+        </p>
+
+    </main>
+
+    <!-- Footer -->
+    <footer style="border-top: 1px solid #e5e7eb; padding: 24px;">
+        <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 24px;">
+            <p style="color: #9ca3af; font-size: 12px; margin: 0;">© 2025 One UML. All rights reserved.</p>
+            <div style="display: flex; gap: 24px;">
+                <a href="#" style="color: #9ca3af; font-size: 12px; text-decoration: none;">Help</a>
+                <a href="#" style="color: #9ca3af; font-size: 12px; text-decoration: none;">Documentation</a>
+                <a href="#" style="color: #9ca3af; font-size: 12px; text-decoration: none;">Support</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle Related Data Section
+        function toggleRelatedData() {
+            const relatedData = document.getElementById('relatedData');
+            const chevron = document.getElementById('chevron');
+            
+            if (relatedData.style.display === 'none' || !relatedData.style.display) {
+                relatedData.style.display = 'block';
+                chevron.style.transform = 'rotate(180deg)';
+            } else {
+                relatedData.style.display = 'none';
+                chevron.style.transform = 'rotate(0deg)';
+            }
+        }
+
+        // Add Focus States
+        document.querySelectorAll('input, textarea').forEach(element => {
+            element.addEventListener('focus', function() {
+                this.style.borderColor = '#2563eb';
+                this.style.boxShadow = '0 0 0 3px rgba(37, 99, 235, 0.1)';
+            });
+            
+            element.addEventListener('blur', function() {
+                this.style.borderColor = '#d1d5db';
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Add Button Hover Effects
+        document.querySelectorAll('button').forEach(button => {
+            const originalBg = getComputedStyle(button).backgroundColor;
+            
+            if (originalBg === 'rgb(55, 65, 81)') {
+                button.addEventListener('mouseenter', () => {
+                    button.style.backgroundColor = '#1f2937';
+                });
+                button.addEventListener('mouseleave', () => {
+                    button.style.backgroundColor = '#374151';
+                });
+            } else if (originalBg === 'rgb(255, 255, 255)') {
+                button.addEventListener('mouseenter', () => {
+                    button.style.backgroundColor = '#f9fafb';
+                });
+                button.addEventListener('mouseleave', () => {
+                    button.style.backgroundColor = '#ffffff';
+                });
+            }
+        });
+
+        // Add Navigation Hover Effects
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('mouseenter', () => {
+                link.style.color = '#374151';
+            });
+            link.addEventListener('mouseleave', () => {
+                link.style.color = '#6b7280';
+            });
+        });
+    </script>
 </body>
 </html>
