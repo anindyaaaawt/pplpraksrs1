@@ -2,10 +2,505 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>User Story</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Activity Diagram Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+        }
+        
+        button {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        
+        header h1 {
+            color: #2c3e50;
+        }
+    </style>
 </head>
 <body>
-    <h1>Halo! Django</h1>
-    <p>Kalau kamu bisa lihat tulisan ini, berarti template sudah terbaca dengan benar.</p>
+    <div style="min-height: 100vh; background-color: #f9fafb; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+        <!-- Header -->
+        <header style="background-color: #ffffff; border-bottom: 1px solid #e5e7eb; padding: 0 24px;">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; height: 64px;">
+                <!-- Logo -->
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <div style="width: 24px; height: 24px; background-color: #111827; border-radius: 4px; display: flex; align-items: center; justify-content: center;">
+                        <span style="color: white; font-size: 12px; font-weight: bold;">⚡</span>
+                    </div>
+                    <span style="font-size: 20px; font-weight: 600; color: #111827;">One UML</span>
+                </div>
+                
+                <!-- Navigation -->
+                <nav style="display: flex; align-items: center; gap: 32px;">
+                    <a href="#" style="color: #6b7280; text-decoration: none; font-size: 14px;">Dashboard</a>
+                    <a href="#" style="color: #6b7280; text-decoration: none; font-size: 14px;">Use Cases</a>
+                    <a href="#" style="color: #111827; text-decoration: none; font-size: 14px; font-weight: 500;">Activity Diagrams</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main style="max-width: 1200px; margin: 0 auto; padding: 32px 24px;">
+            <div style="display: grid; grid-template-columns: 1fr 320px; gap: 48px;">
+                <!-- Left Column - Form -->
+                <div style="background-color: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; padding: 32px;">
+                    <!-- Header -->
+                    <div style="margin-bottom: 32px;">
+                        <h1 style="font-size: 28px; font-weight: 600; color: #2c3e50; margin-bottom: 8px;">Create Activity Diagram</h1>
+                        <p style="color: #6b7280; font-size: 14px;">Design a visual representation of the workflow and activities in your system</p>
+                    </div>
+
+                    <form id="activityDiagramForm">
+                        <!-- Diagram Title -->
+                        <div style="margin-bottom: 24px;">
+                            <label style="display: block; font-size: 14px; font-weight: 500; color: #111827; margin-bottom: 8px;">
+                                Diagram Title <span style="color: #ef4444;">*</span>
+                            </label>
+                            <input id="diagramTitle" type="text" placeholder="e.g., User Login Process" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; background-color: #ffffff;" />
+                        </div>
+
+                        <!-- Description -->
+                        <div style="margin-bottom: 24px;">
+                            <label style="display: block; font-size: 14px; font-weight: 500; color: #111827; margin-bottom: 8px;">Description</label>
+                            <textarea id="diagramDescription" placeholder="Brief description of the process or workflow" style="width: 100%; height: 80px; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; background-color: #ffffff; resize: vertical;"></textarea>
+                        </div>
+
+                        <!-- Actors/Swimlanes -->
+                        <div style="margin-bottom: 24px;">
+                            <label style="display: block; font-size: 14px; font-weight: 500; color: #111827; margin-bottom: 8px;">Actors/Swimlanes</label>
+                            <div id="actorContainer" style="border: 1px solid #d1d5db; border-radius: 6px; padding: 12px; background-color: #ffffff; margin-bottom: 12px;">
+                                <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+                                    <span class="actor-tag" data-actor="User" style="background-color: #f3f4f6; padding: 6px 12px; border-radius: 16px; font-size: 14px; color: #374151; cursor: pointer;">User</span>
+                                    <span class="actor-tag" data-actor="System" style="background-color: #f3f4f6; padding: 6px 12px; border-radius: 16px; font-size: 14px; color: #374151; cursor: pointer;">System</span>
+                                    <span class="actor-tag" data-actor="Database" style="background-color: #f3f4f6; padding: 6px 12px; border-radius: 16px; font-size: 14px; color: #374151; cursor: pointer;">Database</span>
+                                    <span class="actor-tag" data-actor="Admin" style="background-color: #f3f4f6; padding: 6px 12px; border-radius: 16px; font-size: 14px; color: #374151; cursor: pointer;">Admin</span>
+                                </div>
+                            </div>
+                            <button id="addActorBtn" type="button" style="display: flex; align-items: center; gap: 4px; color: #2563eb; font-size: 14px; background: none; border: none;">
+                                <span style="font-size: 16px;">+</span> Add new actor/swimlane
+                            </button>
+                            <p style="font-size: 12px; color: #6b7280; margin-top: 4px;">Select actors or entities involved in this process</p>
+                        </div>
+
+                        <!-- Initial State -->
+                        <div style="margin-bottom: 24px;">
+                            <label style="display: block; font-size: 14px; font-weight: 500; color: #111827; margin-bottom: 8px;">Initial State</label>
+                            <input id="initialState" type="text" placeholder="e.g., Start, User opens app" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; background-color: #ffffff;" />
+                        </div>
+
+                        <!-- Activities -->
+                        <div style="margin-bottom: 24px;">
+                            <label style="display: block; font-size: 14px; font-weight: 500; color: #111827; margin-bottom: 8px;">Activities</label>
+                            <p style="font-size: 12px; color: #6b7280; margin-bottom: 12px;">Add activities in the order they occur in the workflow</p>
+                            
+                            <div id="activitiesContainer">
+                                <div class="activity-item" style="display: flex; align-items: start; gap: 12px; margin-bottom: 16px; padding: 16px; border: 1px solid #e5e7eb; border-radius: 8px; background-color: #fafafa;">
+                                    <div style="display: flex; align-items: center; gap: 4px; color: #6b7280;">
+                                        <span style="cursor: move;">⋮⋮</span>
+                                        <span class="activity-number" style="font-weight: 500;">1.</span>
+                                    </div>
+                                    <div style="flex: 1;">
+                                        <input type="text" class="activity-name" placeholder="Activity name" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; background-color: #ffffff; margin-bottom: 8px;" />
+                                        <select class="activity-type" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; background-color: #ffffff; margin-bottom: 8px;">
+                                            <option value="action">Action</option>
+                                            <option value="decision">Decision</option>
+                                            <option value="merge">Merge</option>
+                                            <option value="fork">Fork</option>
+                                            <option value="join">Join</option>
+                                        </select>
+                                        <select class="activity-actor" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; background-color: #ffffff;">
+                                            <option value="">Select responsible actor</option>
+                                            <option value="User">User</option>
+                                            <option value="System">System</option>
+                                            <option value="Database">Database</option>
+                                            <option value="Admin">Admin</option>
+                                        </select>
+                                    </div>
+                                    <button type="button" class="remove-activity" style="color: #999; background: none; border: none; font-size: 16px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 3px;">🗑</button>
+                                </div>
+                            </div>
+
+                            <button id="addActivityBtn" type="button" style="display: flex; align-items: center; gap: 4px; color: #2563eb; font-size: 14px; background: none; border: none;">
+                                <span style="font-size: 16px;">+</span> Add Activity
+                            </button>
+                        </div>
+
+                        <!-- Decision Points -->
+                        <div style="margin-bottom: 24px;">
+                            <label style="display: block; font-size: 14px; font-weight: 500; color: #111827; margin-bottom: 12px;">Decision Points (optional)</label>
+                            
+                            <div id="decisionContainer">
+                                <div class="decision-item" style="margin-bottom: 16px; padding: 16px; border: 1px solid #e5e7eb; border-radius: 8px; background-color: #fef7ff;">
+                                    <input type="text" class="decision-question" placeholder="Decision question (e.g., Is login valid?)" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; background-color: #ffffff; margin-bottom: 12px;" />
+                                    
+                                    <div class="decision-paths" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                                        <div>
+                                            <label style="font-size: 12px; color: #16a34a; font-weight: 500; margin-bottom: 4px; display: block;">Yes/True Path</label>
+                                            <input type="text" class="yes-path" placeholder="Next activity if yes" style="width: 100%; padding: 8px 12px; border: 1px solid #16a34a; border-radius: 4px; font-size: 14px; background-color: #f0fdf4;" />
+                                        </div>
+                                        <div>
+                                            <label style="font-size: 12px; color: #dc2626; font-weight: 500; margin-bottom: 4px; display: block;">No/False Path</label>
+                                            <input type="text" class="no-path" placeholder="Next activity if no" style="width: 100%; padding: 8px 12px; border: 1px solid #dc2626; border-radius: 4px; font-size: 14px; background-color: #fef2f2;" />
+                                        </div>
+                                    </div>
+
+                                    <button type="button" class="remove-decision" style="color: #ef4444; font-size: 12px; background: none; border: none; margin-top: 8px;">Remove Decision Point</button>
+                                </div>
+                            </div>
+
+                            <button id="addDecisionBtn" type="button" style="display: flex; align-items: center; gap: 4px; color: #2563eb; font-size: 14px; background: none; border: none;">
+                                <span style="font-size: 16px;">+</span> Add Decision Point
+                            </button>
+                        </div>
+
+                        <!-- Final State -->
+                        <div style="margin-bottom: 32px;">
+                            <label style="display: block; font-size: 14px; font-weight: 500; color: #111827; margin-bottom: 8px;">Final State</label>
+                            <input id="finalState" type="text" placeholder="e.g., End, Process completed" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; background-color: #ffffff;" />
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; padding-top: 15px; border-top: 1px solid #e5e7eb;">
+                            <button type="submit" style="background-color: #111827; color: #ffffff; border-radius: 6px; font-size: 14px; font-weight: 500; border: none;">
+                                Generate Activity Diagram
+                            </button>
+                            <button id="previewBtn" type="button" style="background-color: #374151; color: #ffffff; border-radius: 6px; font-size: 14px; font-weight: 500; border: none;">
+                                Preview Diagram
+                            </button>
+                            <button id="saveBtn" type="button" style="color: #6b7280; border-radius: 6px; font-size: 14px; font-weight: 500; border: 1px solid #d1d5db; background-color: #ffffff;">
+                                Save as Template
+                            </button>
+                            <button type="button" style="color: #6b7280; border-radius: 6px; font-size: 14px; font-weight: 500; border: 1px solid #d1d5db; background-color: #ffffff;">
+                                Back
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Right Column - Tutorial -->
+                <div style="background-color: #ffffff; border-radius: 8px; border: 1px solid #e5e7eb; padding: 24px; height: fit-content;">
+                    <h3 style="font-size: 18px; font-weight: 600; color: #111827; margin-bottom: 16px;">Activity Diagram Guide</h3>
+                    
+                    <div style="margin-bottom: 24px;">
+                        <h4 style="font-size: 14px; font-weight: 500; color: #111827; margin-bottom: 8px;">Activity Types</h4>
+                        <div style="font-size: 12px; color: #6b7280; line-height: 1.5;">
+                            <div style="margin-bottom: 8px; display: flex; gap: 8px;">
+                                <span style="background-color: #dbeafe; padding: 2px 6px; border-radius: 4px; font-weight: 500;">Action</span>
+                                <span>Regular activity or task</span>
+                            </div>
+                            <div style="margin-bottom: 8px; display: flex; gap: 8px;">
+                                <span style="background-color: #fef3c7; padding: 2px 6px; border-radius: 4px; font-weight: 500;">Decision</span>
+                                <span>Branching point with conditions</span>
+                            </div>
+                            <div style="margin-bottom: 8px; display: flex; gap: 8px;">
+                                <span style="background-color: #dcfce7; padding: 2px 6px; border-radius: 4px; font-weight: 500;">Merge</span>
+                                <span>Combine multiple flows</span>
+                            </div>
+                            <div style="margin-bottom: 8px; display: flex; gap: 8px;">
+                                <span style="background-color: #f3e8ff; padding: 2px 6px; border-radius: 4px; font-weight: 500;">Fork/Join</span>
+                                <span>Parallel activities</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-bottom: 24px;">
+                        <h4 style="font-size: 14px; font-weight: 500; color: #111827; margin-bottom: 12px;">Example Process</h4>
+                        <div style="background-color: #f9fafb; border-radius: 6px; padding: 16px;">
+                            <p style="font-size: 12px; color: #6b7280; margin-bottom: 12px;">User Login Process:</p>
+                            <div style="background-color: #ffffff; border-radius: 4px; padding: 12px; border: 1px solid #e5e7eb;">
+                                <div style="font-size: 11px; color: #111827; line-height: 1.6;">
+                                    <div style="margin-bottom: 4px;">1. Start → Enter credentials</div>
+                                    <div style="margin-bottom: 4px;">2. System validates credentials</div>
+                                    <div style="margin-bottom: 4px;">3. Decision: Are credentials valid?</div>
+                                    <div style="margin-bottom: 4px;">&nbsp;&nbsp;• Yes → Login successful</div>
+                                    <div style="margin-bottom: 4px;">&nbsp;&nbsp;• No → Show error message</div>
+                                    <div style="margin-bottom: 4px;">4. End</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 style="font-size: 14px; font-weight: 500; color: #111827; margin-bottom: 8px;">Tips</h4>
+                        <ul style="font-size: 12px; color: #6b7280; line-height: 1.4; margin-left: 16px;">
+                            <li style="margin-bottom: 4px;">Use clear, action-oriented names</li>
+                            <li style="margin-bottom: 4px;">Assign activities to appropriate actors</li>
+                            <li style="margin-bottom: 4px;">Keep decision questions simple</li>
+                            <li style="margin-bottom: 4px;">Consider parallel processes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer style="background-color: #ffffff; border-top: 1px solid #e5e7eb; padding: 16px 24px; margin-top: 48px;">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
+                <p style="font-size: 12px; color: #6b7280;">© 2025 One UML. All rights reserved.</p>
+                <div style="display: flex; align-items: center; gap: 24px;">
+                    <a href="#" style="font-size: 12px; color: #6b7280; text-decoration: none;">Help</a>
+                    <a href="#" style="font-size: 12px; color: #6b7280; text-decoration: none;">Privacy</a>
+                    <a href="#" style="font-size: 12px; color: #6b7280; text-decoration: none;">Terms</a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        class ActivityDiagramGenerator {
+            constructor() {
+                this.selectedActors = new Set();
+                this.init();
+            }
+
+            init() {
+                this.bindActorEvents();
+                this.bindActivityEvents();
+                this.bindDecisionEvents();
+                this.bindFormEvents();
+            }
+
+            // Actor Management
+            bindActorEvents() {
+                const actorTags = document.querySelectorAll('.actor-tag');
+                actorTags.forEach(tag => {
+                    tag.addEventListener('click', () => this.toggleActor(tag));
+                });
+
+                document.getElementById('addActorBtn').addEventListener('click', () => {
+                    const actorName = prompt('Enter new actor/swimlane name:');
+                    if (actorName && actorName.trim()) {
+                        this.addCustomActor(actorName.trim());
+                    }
+                });
+            }
+
+            toggleActor(tag) {
+                const actor = tag.dataset.actor;
+                if (this.selectedActors.has(actor)) {
+                    this.selectedActors.delete(actor);
+                    tag.style.backgroundColor = '#f3f4f6';
+                    tag.style.color = '#374151';
+                } else {
+                    this.selectedActors.add(actor);
+                    tag.style.backgroundColor = '#2563eb';
+                    tag.style.color = '#ffffff';
+                }
+                this.updateActorDropdowns();
+            }
+
+            addCustomActor(actorName) {
+                const container = document.querySelector('#actorContainer > div');
+                const newTag = document.createElement('span');
+                newTag.className = 'actor-tag';
+                newTag.dataset.actor = actorName;
+                newTag.style.cssText = 'background-color: #f3f4f6; padding: 6px 12px; border-radius: 16px; font-size: 14px; color: #374151; cursor: pointer;';
+                newTag.textContent = actorName;
+                newTag.addEventListener('click', () => this.toggleActor(newTag));
+                container.appendChild(newTag);
+                
+                // Add to selected actors and update dropdowns
+                this.selectedActors.add(actorName);
+                newTag.style.backgroundColor = '#2563eb';
+                newTag.style.color = '#ffffff';
+                this.updateActorDropdowns();
+            }
+
+            updateActorDropdowns() {
+                const dropdowns = document.querySelectorAll('.activity-actor');
+                dropdowns.forEach(dropdown => {
+                    // Clear existing options except the first one
+                    while (dropdown.children.length > 1) {
+                        dropdown.removeChild(dropdown.lastChild);
+                    }
+                    
+                    // Add selected actors as options
+                    this.selectedActors.forEach(actor => {
+                        const option = document.createElement('option');
+                        option.value = actor;
+                        option.textContent = actor;
+                        dropdown.appendChild(option);
+                    });
+                });
+            }
+
+            // Activity Management
+            bindActivityEvents() {
+                document.getElementById('addActivityBtn').addEventListener('click', () => {
+                    this.addActivity();
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('remove-activity')) {
+                        this.removeActivity(e.target.closest('.activity-item'));
+                    }
+                });
+            }
+
+            addActivity() {
+                const container = document.getElementById('activitiesContainer');
+                const activityCount = container.querySelectorAll('.activity-item').length + 1;
+                
+                const activityDiv = document.createElement('div');
+                activityDiv.className = 'activity-item';
+                activityDiv.style.cssText = 'display: flex; align-items: start; gap: 12px; margin-bottom: 16px; padding: 16px; border: 1px solid #e5e7eb; border-radius: 8px; background-color: #fafafa;';
+                
+                activityDiv.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 4px; color: #6b7280;">
+                        <span style="cursor: move;">⋮⋮</span>
+                        <span class="activity-number" style="font-weight: 500;">${activityCount}.</span>
+                    </div>
+                    <div style="flex: 1;">
+                        <input type="text" class="activity-name" placeholder="Activity name" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; background-color: #ffffff; margin-bottom: 8px;" />
+                        <select class="activity-type" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; background-color: #ffffff; margin-bottom: 8px;">
+                            <option value="action">Action</option>
+                            <option value="decision">Decision</option>
+                            <option value="merge">Merge</option>
+                            <option value="fork">Fork</option>
+                            <option value="join">Join</option>
+                        </select>
+                        <select class="activity-actor" style="width: 100%; padding: 10px 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; background-color: #ffffff;">
+                            <option value="">Select responsible actor</option>
+                        </select>
+                    </div>
+                    <button type="button" class="remove-activity" style="color: #999; background: none; border: none; font-size: 16px; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; border-radius: 3px;">🗑</button>
+                `;
+                
+                container.appendChild(activityDiv);
+                this.updateActorDropdowns();
+            }
+
+            removeActivity(activityElement) {
+                activityElement.remove();
+                this.updateActivityNumbers();
+            }
+
+            updateActivityNumbers() {
+                const activities = document.querySelectorAll('#activitiesContainer .activity-number');
+                activities.forEach((activity, index) => {
+                    activity.textContent = `${index + 1}.`;
+                });
+            }
+
+            // Decision Management
+            bindDecisionEvents() {
+                document.getElementById('addDecisionBtn').addEventListener('click', () => {
+                    this.addDecisionPoint();
+                });
+
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('remove-decision')) {
+                        e.target.closest('.decision-item').remove();
+                    }
+                });
+            }
+
+            addDecisionPoint() {
+                const container = document.getElementById('decisionContainer');
+                const decisionDiv = document.createElement('div');
+                decisionDiv.className = 'decision-item';
+                decisionDiv.style.cssText = 'margin-bottom: 16px; padding: 16px; border: 1px solid #e5e7eb; border-radius: 8px; background-color: #fef7ff;';
+                
+                decisionDiv.innerHTML = `
+                    <input type="text" class="decision-question" placeholder="Decision question (e.g., Is login valid?)" style="width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; background-color: #ffffff; margin-bottom: 12px;" />
+                    
+                    <div class="decision-paths" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                        <div>
+                            <label style="font-size: 12px; color: #16a34a; font-weight: 500; margin-bottom: 4px; display: block;">Yes/True Path</label>
+                            <input type="text" class="yes-path" placeholder="Next activity if yes" style="width: 100%; padding: 8px 12px; border: 1px solid #16a34a; border-radius: 4px; font-size: 14px; background-color: #f0fdf4;" />
+                        </div>
+                        <div>
+                            <label style="font-size: 12px; color: #dc2626; font-weight: 500; margin-bottom: 4px; display: block;">No/False Path</label>
+                            <input type="text" class="no-path" placeholder="Next activity if no" style="width: 100%; padding: 8px 12px; border: 1px solid #dc2626; border-radius: 4px; font-size: 14px; background-color: #fef2f2;" />
+                        </div>
+                    </div>
+
+                    <button type="button" class="remove-decision" style="color: #ef4444; font-size: 12px; background: none; border: none; margin-top: 8px;">Remove Decision Point</button>
+                `;
+                
+                container.appendChild(decisionDiv);
+            }
+
+            // Form Management
+            bindFormEvents() {
+                document.getElementById('activityDiagramForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.generateDiagram();
+                });
+
+                document.getElementById('previewBtn').addEventListener('click', () => {
+                    this.previewDiagram();
+                });
+
+                document.getElementById('saveBtn').addEventListener('click', () => {
+                    this.saveTemplate();
+                });
+
+                document.querySelector('button[type="button"]:last-child').addEventListener('click', () => {
+                    if (confirm('Are you sure you want to go back? Any unsaved changes will be lost.')) {
+                        window.history.back();
+                    }
+                });
+            }
+
+            generateDiagram() {
+                const data = this.collectFormData();
+                console.log('Generating activity diagram:', data);
+                alert('Activity Diagram generated successfully!');
+            }
+
+            previewDiagram() {
+                const data = this.collectFormData();
+                console.log('Previewing activity diagram:', data);
+                alert('Preview feature coming soon!');
+            }
+
+            saveTemplate() {
+                const data = this.collectFormData();
+                console.log('Saving as template:', data);
+                alert('Template saved successfully!');
+            }
+
+            collectFormData() {
+                return {
+                    title: document.getElementById('diagramTitle').value,
+                    description: document.getElementById('diagramDescription').value,
+                    actors: Array.from(this.selectedActors),
+                    initialState: document.getElementById('initialState').value,
+                    finalState: document.getElementById('finalState').value,
+                    activities: this.getActivities(),
+                    decisionPoints: this.getDecisionPoints()
+                };
+            }
+
+            getActivities() {
+                const activities = document.querySelectorAll('.activity-item');
+                return Array.from(activities).map(activity => {
+                    const name = activity.querySelector('.activity-name').value;
+                    const type = activity.querySelector('.activity-type').value;
+                    const actor = activity.querySelector('.activity-actor').value;
+                    return { name, type, actor };
+                }).filter(activity => activity.name.trim());
+            }
+
+            getDecisionPoints() {
+                const decisions = document.querySelectorAll('.decision-item');
+                return Array.from(decisions).map(decision => {
+                    const question = decision.querySelector('.decision-question').value;
+                    const yesPath = decision.querySelector('.yes-path').value;
+                    const noPath = decision.querySelector('.no-path').value;
+                    return { question, yesPath, noPath };
+                }).filter(decision => decision.question.trim());
+            }
+        }
+
+        // Initialize the form when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            new ActivityDiagramGenerator();
+        });
+    </script>
 </body>
 </html>
